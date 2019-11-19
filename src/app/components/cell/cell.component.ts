@@ -9,9 +9,15 @@ export class CellComponent implements OnInit {
 
   @Input() cellId: number;
 
+  private revealed = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  reveal() {
+    this.revealed = true;
   }
 
 }

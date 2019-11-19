@@ -8,4 +8,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+
+.cell.revealed {
+  background: #a6a6a6;
+  font-size: 20px;
+  font-weight: bold;
 }
