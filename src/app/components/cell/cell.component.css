@@ -1,0 +1,11 @@
+.cell {
+  box-sizing: border-box;
+  width: 38px;
+  height: 38px;
+  margin: 1px;
+  background: white;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
