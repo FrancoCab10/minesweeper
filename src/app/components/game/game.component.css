@@ -53,6 +53,14 @@
   background: #5e5e5e;
   border: 1px solid #5e5e5e;
   display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.grid-row {
+  display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-content: flex-start;
