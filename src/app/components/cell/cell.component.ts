@@ -42,7 +42,7 @@ export class CellComponent implements OnInit {
   }
 
   setBomb() {
-    return this.withBomb = true;
+    this.withBomb = true;
   }
 
   setMark(evt) {
