@@ -1,7 +1,8 @@
 <div class="card">
   <h1 class="title">Minesweeper</h1>
   <div class="controls">
-    <button class="btn-start" (click)="restartGame()">Start</button>
+    <button *ngIf="state != 'P';" class="btn-start" (click)="restartGame()">Start</button>
+    <button *ngIf="state == 'P';" class="btn-stop" (click)="stopGame()">Stop</button>
     <app-timer></app-timer>
   </div>
   <div class="grid">
@@ -16,3 +17,5 @@
     </div>
   </div>
 </div>
+<div class="msg-success" *ngIf="state == 'W';">You Won!</div>
+<div class="msg-defeat" *ngIf="state == 'L';">You Lost!</div>

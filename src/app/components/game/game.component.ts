@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import { CellComponent } from '../cell/cell.component';
+import { TimerComponent } from '../timer/timer.component';
 
 @Component({
   selector: 'app-game',
@@ -10,6 +11,7 @@ import { CellComponent } from '../cell/cell.component';
 export class GameComponent implements OnInit {
 
   @ViewChildren(CellComponent) cells: QueryList<CellComponent>;
+  @ViewChild(TimerComponent, { static: false }) timer: TimerComponent;
 
   private state = GameState.STAND_BY;
   private grid: number[][] = [];
@@ -37,12 +39,21 @@ export class GameComponent implements OnInit {
     this.state = GameState.PLAYING;
     this.cells.forEach(cell => cell.reset());
     this.putBombs();
+    this.timer.startTimer();
+  }
+
+  stopGame() {
+    this.state = GameState.LOST;
+    this.timer.stopTimer();
+    console.log('LOST');
+    return;
   }
 
   cellClick(result: string, cellId: number, rowPos: number, colPos: number) {
     
     if(result == 'L') {
       this.state = GameState.LOST;
+      this.timer.stopTimer();
       console.log('LOST');      
       return;
     }
@@ -51,6 +62,7 @@ export class GameComponent implements OnInit {
     
     if (this.revealedCells.length == 100 - this.maxBombs) {
       this.state = GameState.WON;
+      this.timer.stopTimer();
       console.log('WON');      
       return;
     }
