@@ -7,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimerComponent implements OnInit {
 
-  private mins = '00';
-  private secs = '00';
-  private minsTimer = null;
-  private secsTimer = null;
+   mins = '00';
+   secs = '00';
+   minsTimer = null;
+   secsTimer = null;
 
   constructor() { }
 

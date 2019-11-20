@@ -12,11 +12,11 @@ export class CellComponent implements OnInit {
   
   @Output() revearResult = new EventEmitter();
   
-  private revealed = false;
-  private withBomb = false;
-  private adjacentBombs = 0;
-  private colorClass = '';
-  private mark = Marks.NONE;
+   revealed = false;
+   withBomb = false;
+   adjacentBombs = 0;
+   colorClass = '';
+   mark = Marks.NONE;
 
   constructor() {
   }

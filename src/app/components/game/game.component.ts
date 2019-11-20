@@ -13,10 +13,10 @@ export class GameComponent implements OnInit {
   @ViewChildren(CellComponent) cells: QueryList<CellComponent>;
   @ViewChild(TimerComponent, { static: false }) timer: TimerComponent;
 
-  private state = GameState.STAND_BY;
-  private grid: number[][] = [];
-  private revealedCells: number[] = [];
-  private maxBombs = 15;
+   state = GameState.STAND_BY;
+   grid: number[][] = [];
+   revealedCells: number[] = [];
+   maxBombs = 15;
 
   constructor() { }
 
