@@ -38,6 +38,7 @@ export class GameComponent implements OnInit {
   restartGame() {
     this.state = GameState.PLAYING;
     this.cells.forEach(cell => cell.reset());
+    this.revealedCells = [];
     this.putBombs();
     this.timer.startTimer();
   }
@@ -58,7 +59,8 @@ export class GameComponent implements OnInit {
       return;
     }
     
-    this.revealedCells.push(cellId);
+    if (!this.revealedCells.includes(cellId))
+      this.revealedCells.push(cellId);
     
     if (this.revealedCells.length == 100 - this.maxBombs) {
       this.state = GameState.WON;
