@@ -1,3 +1,9 @@
-<div class="cell" [class.revealed]="revealed" (click)="reveal()">
-  {{ withBomb? 'O' : '' }}
+<div class="cell" [class.revealed]="revealed" (click)="reveal()" (contextmenu)="setMark($event)">
+  
+  <img src="assets/explosion.svg" alt="B" *ngIf="(gameState == 'W' || gameState == 'L') && withBomb && revealed">
+  <img src="assets/bomb.svg" alt="B" *ngIf="(gameState == 'W' || gameState == 'L') && withBomb && !revealed">
+  <img src="assets/flag.svg" alt="B" *ngIf="!( (gameState == 'W' || gameState == 'L') && withBomb ) && !revealed && mark == 1">
+  <img src="assets/question.svg" alt="B" *ngIf="!revealed && mark == 2">
+  <span [ngClass]="colorClass" *ngIf="adjacentBombs > 0 && revealed && !withBomb">{{ adjacentBombs }}</span>
+
 </div>

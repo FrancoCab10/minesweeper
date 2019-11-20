@@ -9,10 +9,14 @@ export class CellComponent implements OnInit {
 
   @Input() cellId: number;
   @Input() gameState: string;
+  
   @Output() revearResult = new EventEmitter();
   
   private revealed = false;
   private withBomb = false;
+  private adjacentBombs = 0;
+  private colorClass = '';
+  private mark = Marks.NONE;
 
   constructor() {
   }
@@ -24,6 +28,8 @@ export class CellComponent implements OnInit {
     if ( this.gameState != 'P' ) return false;
 
     this.revealed = true;
+    this.mark = Marks.NONE;
+
     if( this.withBomb ) {
       this.revearResult.emit('L');
     } else {
@@ -39,9 +45,42 @@ export class CellComponent implements OnInit {
     return this.withBomb = true;
   }
 
+  setMark(evt) {
+    evt.preventDefault();
+
+    if (this.gameState != 'P') return false;
+
+    switch (this.mark) {
+      case Marks.NONE:
+        this.mark = Marks.FLAG;
+        break;
+      case Marks.FLAG:
+        this.mark = Marks.QUESTION;
+        break;
+      case Marks.QUESTION:
+        this.mark = Marks.NONE;
+        break;
+    }
+  }
+
+  setAdjacentBombs(adjacentBombs) {    
+    this.adjacentBombs = adjacentBombs;
+    if (adjacentBombs == 1) this.colorClass = 'green-text';
+    else if (adjacentBombs == 2) this.colorClass = 'yellow-text';
+    else if (adjacentBombs >= 3) this.colorClass = 'red-text';
+  }
+
   reset() {
     this.withBomb = false;
     this.revealed = false;
+    this.mark = Marks.NONE;
   }
 
 }
+
+enum Marks {
+  NONE = 0,
+  FLAG = 1,
+  QUESTION = 2
+}
+

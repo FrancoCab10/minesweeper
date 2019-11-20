@@ -92,19 +92,22 @@ export class GameComponent implements OnInit {
       adjacentCells.push(g[rowPos + 1][colPos + 1]);
     
 
-    let hasAdjacentBomb = false;
+    let adjacentBombs = 0;
     adjacentCells.forEach(adjacentCellId => {
 
       const cell = this.cells.find(item => item.cellId == adjacentCellId);
       if (cell.hasBomb()) {
-        hasAdjacentBomb = true;
+        adjacentBombs++;
       }
 
     });
 
+    const actualCell = this.cells.find(item => item.cellId == cellId);
+    actualCell.setAdjacentBombs(adjacentBombs);
+
     adjacentCells.forEach(adjacentCellId => {
 
-      if (!this.revealedCells.includes(adjacentCellId) && !hasAdjacentBomb) {
+      if (!this.revealedCells.includes(adjacentCellId) && adjacentBombs == 0) {
         const cell = this.cells.find(item => item.cellId == adjacentCellId);
         cell.reveal();
       }
