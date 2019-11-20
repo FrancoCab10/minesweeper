@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-cell',
@@ -8,8 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CellComponent implements OnInit {
 
   @Input() cellId: number;
+  @Output() revearResult = new EventEmitter();
 
   private revealed = false;
+  private withBomb = false;
 
   constructor() { }
 
@@ -18,6 +20,15 @@ export class CellComponent implements OnInit {
 
   reveal() {
     this.revealed = true;
+    if( this.withBomb ) {
+      this.revearResult.emit('L');
+    } else {
+      this.revearResult.emit('C');
+    }
+  }
+
+  hasBomb() {
+    return this.withBomb;
   }
 
 }
