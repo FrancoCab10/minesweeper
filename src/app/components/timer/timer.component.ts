@@ -41,7 +41,6 @@ export class TimerComponent implements OnInit {
 
   addMins() {
     this.mins = ('' + Math.round((+this.mins + 1))).padStart(2, '0');
-    this.addMins();
   }
 
 }
