@@ -14,11 +14,11 @@ export class GameComponent implements OnInit {
   private state = GameState.STAND_BY;
   private grid: number[][] = [];
   private revealedCells: number[] = [];
+  private maxBombs = 15;
 
   constructor() { }
 
   ngOnInit() {
-
     // Initializing grid
     let cellId = 1;
     for (let row = 0; row < 10; row++) {
@@ -31,17 +31,29 @@ export class GameComponent implements OnInit {
       
       this.grid[row] = aux;
     }
+  }
 
+  restartGame() {
+    this.state = GameState.PLAYING;
+    this.cells.forEach(cell => cell.reset());
+    this.putBombs();
   }
 
   cellClick(result: string, cellId: number, rowPos: number, colPos: number) {
     
     if(result == 'L') {
       this.state = GameState.LOST;
+      console.log('LOST');      
       return;
     }
-
+    
     this.revealedCells.push(cellId);
+    
+    if (this.revealedCells.length == 100 - this.maxBombs) {
+      this.state = GameState.WON;
+      console.log('WON');      
+      return;
+    }
 
     const g = this.grid;
 
@@ -79,14 +91,44 @@ export class GameComponent implements OnInit {
     if (rowPos < 9 && colPos < 9)
       adjacentCells.push(g[rowPos + 1][colPos + 1]);
     
+
+    let hasAdjacentBomb = false;
     adjacentCells.forEach(adjacentCellId => {
 
-      if ( adjacentCellId > 0 && !this.revealedCells.includes(adjacentCellId) ) {
-        const cell = this.cells.find(item => item.cellId == adjacentCellId);
-        if (!cell.hasBomb()) cell.reveal();
+      const cell = this.cells.find(item => item.cellId == adjacentCellId);
+      if (cell.hasBomb()) {
+        hasAdjacentBomb = true;
       }
 
-    })
+    });
+
+    adjacentCells.forEach(adjacentCellId => {
+
+      if (!this.revealedCells.includes(adjacentCellId) && !hasAdjacentBomb) {
+        const cell = this.cells.find(item => item.cellId == adjacentCellId);
+        cell.reveal();
+      }
+
+    });
+  }
+
+  putBombs() {
+
+    let bomb = 0;
+    while (bomb < this.maxBombs) {
+
+      let cellId = Math.ceil(Math.random() * 100);
+      if (cellId == 0) cellId = 1;
+
+      const cell = this.cells.find(item => item.cellId == cellId);
+
+      if(!cell.hasBomb()) {
+        cell.setBomb();      
+        bomb++;
+      }
+
+    }
+
   }
 
 }

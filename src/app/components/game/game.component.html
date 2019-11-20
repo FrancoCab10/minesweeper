@@ -1,13 +1,17 @@
 <div class="card">
   <h1 class="title">Minesweeper</h1>
   <div class="controls">
-    <button class="btn-start">Start</button>
+    <button class="btn-start" (click)="restartGame()">Start</button>
     <app-timer></app-timer>
   </div>
   <div class="grid">
     <div class="grid-row" *ngFor="let row of grid; let rowPos = index">
       <div class="grid-col" *ngFor="let cellId of row; let colPos = index">
-        <app-cell [cellId]="cellId" (revearResult)="cellClick($event, cellId, rowPos, colPos)"></app-cell>
+        <app-cell 
+          [cellId]="cellId"
+          [gameState]="state"
+          (revearResult)="cellClick($event, cellId, rowPos, colPos)"
+        ></app-cell>
       </div>
     </div>
   </div>

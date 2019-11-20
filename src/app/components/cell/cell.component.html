@@ -1,1 +1,3 @@
-<div class="cell" [class.revealed]="revealed" (click)="reveal()"> {{ cellId }} </div>
+<div class="cell" [class.revealed]="revealed" (click)="reveal()">
+  {{ withBomb? 'O' : '' }}
+</div>
